@@ -29,7 +29,8 @@ import { ShoppingListService } from './shared/shoppinglist.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule 
+    FormsModule,
+    AppRoutingModule 
   ],
   providers: [
     ShoppingListService
