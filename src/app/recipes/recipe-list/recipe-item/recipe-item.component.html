@@ -1,7 +1,8 @@
-<a 
-    
-    style="cursor: pointer;"
- class="list-group-item clearfix" (click)="onSelect()">
+
+<!-- <a  style="cursor: pointer;" class="list-group-item clearfix" (click)="onSelect()"> -->
+<a routerLinkActive="active" style="cursor: pointer;" class="list-group-item clearfix"
+    [routerLink]="[index]" >
+
     <div class="pull-left">
         <h4 class="list-group-item-heading"> {{ recipeDetails.name}} </h4>
         <p class="list-group-item-text"> {{ recipeDetails.description }} </p>

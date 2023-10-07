@@ -11,6 +11,7 @@
         <app-recipe-item 
         *ngFor="let r of recipes; let i=index" 
         [recipeDetails]="r"
+        [index]="i"
         ></app-recipe-item>
     </div>
 </div>
