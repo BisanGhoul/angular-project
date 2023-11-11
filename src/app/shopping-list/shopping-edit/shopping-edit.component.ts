@@ -41,7 +41,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     );
   }
 
-  onAddItem(form: NgForm) {
+  onSubmitItem(form: NgForm) {// add new item or update selected item from the list
     const value = form.value;
     // const ingName = this.nameInputRef.nativeElement.value;
     // const ingAmount = this.amountInputRef.nativeElement.value;
@@ -51,6 +51,8 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     }else{
       this.shoppingService.addIngredient(newIngredient);
     }
+    this.editMode = false; //or else we will get stuck in the dit mode
+    form.reset();
   }
 
   ngOnDestroy(): void {
