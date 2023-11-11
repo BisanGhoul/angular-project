@@ -7,8 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'course-project';
-  featureToShow: string = 'recipe';
-  showView(feature: string){
-    this.featureToShow = feature;
-  }
+  // featureToShow: string = 'recipe';
+  // showView(feature: string){
+  //   this.featureToShow = feature;
+  // }
 }
