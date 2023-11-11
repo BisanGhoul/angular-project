@@ -14,7 +14,7 @@
                         <input type="text"
                         id="name"
                         class="form-control"
-                        [formControlName]="'name'">
+                        formControlName="name">
                     </div>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                         <input type="text"
                         id="imagePath"
                         class="form-control"
-                        [formControlName]="'imagePath'">
+                        formControlName="imagePath">
                     </div>
                 </div>
             </div>
@@ -42,22 +42,27 @@
                         id="description"
                         class="form-control"
                         rows="6"
-                        [formControlName]="'description'"></textarea>
+                        formControlName="description"></textarea>
                     </div>
                 </div>
             </div>
             <div class="row" style="padding-bottom: 30px;">
-                <div class="col-xs-12">
-                    <div class="row">
+                <div class="col-xs-12" formArrayName="ingredients">
+                    <div class="row"
+                    *ngFor="let ingredientCtrl of controls; let i = index" 
+                    [formGroupName]="i">
                         <div class="col-xs-8">
                             <input
                              type="text"
-                             class="form-control">
+                             class="form-control"
+                             formControlName="name">
                         </div>
                         <div class="col-xs-2">
                             <input
                              type="number"
-                             class="form-control">
+                             class="form-control"
+                             formControlName="amount">
+
                         </div>
                         <div class="col-xs-2">
                             <button class="btn btn-danger">X</button>
