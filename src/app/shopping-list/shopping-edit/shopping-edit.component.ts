@@ -60,6 +60,11 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     this.editMode = false; //or else we will get stuck in the dit
   }
 
+  onDelete(){
+    this.shoppingService.deleteIngredient(this.editedItemIndex);
+    this.onClear();  
+  }
+
   ngOnDestroy(): void {
     this.subscibtion.unsubscribe();
   }
