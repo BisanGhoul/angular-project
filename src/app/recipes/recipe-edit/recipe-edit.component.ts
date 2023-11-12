@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, NgForm } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { RecipeService } from 'src/app/shared/recipe.service';
 import { Recipe } from '../recipe.model';
@@ -41,8 +41,11 @@ export class RecipeEditComponent implements OnInit {
   onAddIngredient(){
     (<FormArray>this.recipeForm.get('ingredients')).push(
       new FormGroup({
-        'name': new FormControl("name"),
-        'amount': new FormControl(0)
+        'name': new FormControl(null, Validators.required),
+        'amount': new FormControl(0,[
+          Validators.required,
+          Validators.pattern(/^[1-9]+[0-9]*$/)
+        ])
       })
     )
   }
@@ -63,8 +66,11 @@ export class RecipeEditComponent implements OnInit {
           for(let ing of recipe.ingredients){
             recipeIngredients.push(
               new FormGroup({
-                'name': new FormControl(ing.name),
-                'amount': new FormControl(ing.amount)
+                'name': new FormControl(ing.name, Validators.required),
+                'amount': new FormControl(ing.amount,[
+                   Validators.required,
+                   Validators.pattern(/^[1-9]+[0-9]*$/)
+                ])
               })
             )
           }
@@ -72,9 +78,9 @@ export class RecipeEditComponent implements OnInit {
       }
 
     this.recipeForm = new FormGroup({
-      'name:': new FormControl(recipeName),//if we are in editmode will have the name of the recipe, if not will be empty
-      'imagePath': new FormControl(recipeImgPath),
-      'description': new FormControl(recipeDesc),
+      'name': new FormControl(recipeName, Validators.required),//if we are in editmode will have the name of the recipe, if not will be empty
+      'imagePath': new FormControl(recipeImgPath, Validators.required),
+      'description': new FormControl(recipeDesc, Validators.required),
       'ingredients': recipeIngredients
     })
   }
