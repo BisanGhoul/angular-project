@@ -7,6 +7,7 @@ import { Subject } from "rxjs";
 @Injectable()
 export class RecipeService{
  
+    recipesChanged = new Subject<Recipe[]>();
     // selectedRecipe = new EventEmitter<Recipe>();
     // selectedRecipe = new Subject<Recipe>();
     //actually no need because we used routing
@@ -33,5 +34,15 @@ export class RecipeService{
     }
     public addIngredientsToShoppingList(ingredients:Ingredient[]){
         this.shoppingService.addIngredients(ingredients);
+    }
+
+    addRecipe(recipe: Recipe){
+        this.recipes.push(recipe);
+        this.recipesChanged.next(this.recipes.slice());
+    }
+
+    updateRecipe(index:number, newRecipe: Recipe){
+        this.recipes[index] = newRecipe;
+        this.recipesChanged.next(this.recipes.slice());
     }
 }
