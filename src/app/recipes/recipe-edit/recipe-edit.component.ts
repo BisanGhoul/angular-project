@@ -60,6 +60,10 @@ export class RecipeEditComponent implements OnInit {
     this.onCancel();
   }
 
+  onDeleteIngredient(index: number){
+    (<FormArray>this.recipeForm.get('ingredients')).removeAt(index);
+  }
+
   onAddIngredient(){
     (<FormArray>this.recipeForm.get('ingredients')).push(
       new FormGroup({
