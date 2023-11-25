@@ -21,4 +21,8 @@ export class HeaderComponent implements OnInit {
   onSaveData(){
     this.DSService.storeRecipe();
   }
+
+  onFetchData(){
+    this.DSService.fetchRecipes();
+  }
 }

@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { RecipeService } from "./recipe.service";
+import { Recipe } from "../recipes/recipe.model";
 
 @Injectable({providedIn: 'root'})
 export class DataStorageService{
@@ -16,6 +17,14 @@ export class DataStorageService{
                 console.log(res);//sub where u call it (header comp) if u want to add a spinner for example
             }
         )// request will be sent when we subsrcibe 
+    }
+
+    fetchRecipes(){
+        this.http.get<Recipe[]>('https://ng-course-recipe-book-191eb-default-rtdb.firebaseio.com/recipes.json').subscribe(
+            res => {
+                this.recipesService.setRecipes(res);
+            }
+        )
     }
 
 }
