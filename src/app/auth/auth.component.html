@@ -10,9 +10,9 @@
                 <input type="password" id="password" class="form-control">
             </div>
             <div>
-                <button class="btn btn-primary">Sign Up</button>
-        
-                <button class="btn btn-primary">Go To LogIn Page</button>
+                <button class="btn btn-primary">{{ isLoginMode ? 'Login' : 'Sign Up'}}</button>
+                <button class="btn btn-primary" (click)="onSwitchMode()">
+                    Go To {{ isLoginMode ? 'Sign Up' : 'Login'}} Page</button>
             </div>
         </form>
     </div>
