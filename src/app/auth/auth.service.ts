@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { throwError } from "rxjs/internal/observable/throwError";
 import { catchError } from "rxjs/operators";
@@ -28,24 +28,8 @@ export class AuthService{
             password: password,
             returnSecureToken: true
         }) // JS object should hold 3 things this end point expects (email, password, returnSecureToken)
-        .pipe(catchError(
-            errorRes => {
-                let errorMessage = "an Error occurred";
-                console.log(errorRes.error.error.message); //if signup fails log erros message
-                if(!errorRes.error || !errorRes.error.error){
-                    return throwError(errorMessage);
-                }
-                switch(errorRes.error.error.message){
-                    case "EMAIL_EXISTS": 
-                    errorMessage = "there is an existing user with this email!";
-                    case "INVALID_LOGIN_CREDENTIALS":
-                        errorMessage = "There is no user record corresponding to this identifier. The user may have been deleted.";
-
-                    return throwError(errorMessage);
-                }
-            }
-        )
-        )
+        .pipe(catchError(this.handleError)
+        );
     }
 
     login(email:string, password:string){
@@ -55,6 +39,26 @@ export class AuthService{
             password: password,
             returnSecureToken: true
         })
+        .pipe(catchError(this.handleError)
+        );
+
+    }
+
+    private handleError(errorRes: HttpErrorResponse){
+        let errorMessage = "an Error occurred";
+                console.log(errorRes.error.error.message); //if signup fails log erros message
+                if(!errorRes.error || !errorRes.error.error){
+                    return throwError(errorMessage);
+                }
+                switch(errorRes.error.error.message){
+                    case "EMAIL_EXISTS": 
+                    errorMessage = "there is an existing user with this email!";
+                    break;
+                    case "INVALID_LOGIN_CREDENTIALS":
+                        errorMessage = "There is no user record corresponding to this identifier. The user may have been deleted.";
+                    break;
+                }
+                return throwError(errorMessage);
 
     }
 } 
