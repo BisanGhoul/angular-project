@@ -1,5 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { throwError } from "rxjs/internal/observable/throwError";
+import { catchError } from "rxjs/operators";
 
 //create an interface here becauz we will only need it here 
 //we will get back these 5 fields, how our response looks like
@@ -25,6 +27,21 @@ export class AuthService{
             email: email,
             password: password,
             returnSecureToken: true
-        }); // JS object should hold 3 things this end point expects (email, password, returnSecureToken)
+        }) // JS object should hold 3 things this end point expects (email, password, returnSecureToken)
+        .pipe(catchError(
+            errorRes => {
+                let errorMessage = "an Error occurred";
+                console.log(errorRes.error.error.message); //if signup fails log erros message
+                if(!errorRes.error || !errorRes.error.error){
+                    return throwError(errorMessage);
+                }
+                switch(errorRes.error.error.message){
+                    case "EMAIL_EXISTS": 
+                    errorMessage = "there is an existing user with this email!";
+                    return throwError(errorMessage);
+                }
+            }
+        )
+        )
     }
 } 

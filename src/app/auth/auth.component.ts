@@ -10,7 +10,9 @@ import { AuthService } from "./auth.service";
 
 export class AuthComponent{
     isLoginMode = true;
-    
+    isLoading = false;
+    error: string = null;
+
     constructor(private authService: AuthService){}
 
     onSwitchMode(){
@@ -25,15 +27,20 @@ export class AuthComponent{
         const email = form.value.email;
         const password = form.value.password;
 
+        this.isLoading = true;// we sent a request and we are loading
+
         if(this.isLoginMode){
 
         }else{
             this.authService.signup(email, password).subscribe(
                 responseData => {
                     console.log(responseData); //if signup succeeds log response data
+                    this.isLoading = false;
                 },
-                error => {
-                    console.log(error); //if signup fails log erros message
+                errorMsg => { //an observable that includes only the message
+                    console.log(errorMsg); //if signup fails log erros message
+                    this.error = errorMsg;
+                    this.isLoading = false;
                 }
             )
         }
