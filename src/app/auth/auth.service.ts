@@ -3,15 +3,15 @@ import { Injectable } from "@angular/core";
 import { throwError } from "rxjs/internal/observable/throwError";
 import { catchError } from "rxjs/operators";
 
-//create an interface here becauz we will only need it here 
 //we will get back these 5 fields, how our response looks like
 //optional, good practice
-interface AuthResponseData{
+export interface AuthResponseData{
     idToken: string;
     email: string;
     refreshToken: string;
     expiresIn: number;
     localId: string;
+    registered?: boolean //optional for login request
 }
 
 @Injectable({providedIn: 'root'})
@@ -38,10 +38,23 @@ export class AuthService{
                 switch(errorRes.error.error.message){
                     case "EMAIL_EXISTS": 
                     errorMessage = "there is an existing user with this email!";
+                    case "INVALID_LOGIN_CREDENTIALS":
+                        errorMessage = "There is no user record corresponding to this identifier. The user may have been deleted.";
+
                     return throwError(errorMessage);
                 }
             }
         )
         )
+    }
+
+    login(email:string, password:string){
+        return this.http.post<AuthResponseData>("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDrXES1UhlQRB56LuRRmeyy75v7Q4MpSxU",
+        {
+            email: email,
+            password: password,
+            returnSecureToken: true
+        })
+
     }
 } 
