@@ -12,18 +12,20 @@ export class RecipeService{
     // selectedRecipe = new Subject<Recipe>();
     //actually no need because we used routing
 
-    private recipes : Recipe[] = [
-        new Recipe("Maqloubeh", "Palestinian cuisine",
-    "https://jonoandjules.files.wordpress.com/2019/06/maqloubeh-rice-with-aubergines-peppers.jpg?w=584",
-    [new Ingredient("Rice",2)]),
+    // private recipes : Recipe[] = [
+    //     new Recipe("Maqlouhhcgcgggbeh", "Palestinian cuisine",
+    // "https://jonoandjules.files.wordpress.com/2019/06/maqloubeh-rice-with-aubergines-peppers.jpg?w=584",
+    // [new Ingredient("Rice",2)]),
 
-    new Recipe("Maqloubaah 2", "Palestinian cuisine",
-    "https://jonoandjules.files.wordpress.com/2019/06/maqloubeh-rice-with-aubergines-peppers.jpg?w=584",
-    [new Ingredient("Rice",2), new Ingredient("Tomatoe",3)])
+    // new Recipe("Maqloubaah 2", "Palestinian cuisine",
+    // "https://jonoandjules.files.wordpress.com/2019/06/maqloubeh-rice-with-aubergines-peppers.jpg?w=584",
+    // [new Ingredient("Rice",2), new Ingredient("Tomatoe",3)])
 
-    ];
+    // ];
+    private recipes: Recipe[] = [];
 
-    constructor(private shoppingService: ShoppingListService){}
+    constructor(private shoppingService: ShoppingListService) {}
+  
 
     public getRecipes(){
         return this.recipes.slice();
