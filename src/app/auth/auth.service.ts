@@ -72,7 +72,25 @@ export class AuthService{
                 expiartionDate
             );
             this.user.next(user);//currently logged in user
+            localStorage.setItem('userData', JSON.stringify(user));//store it in storage
         
+    }
+
+    autoLogin(){
+        const userData: {
+            email: string,
+            id: string,
+            _token: string;
+            _tokenExpirationDate: string; // have to manually parse it
+        } = JSON.parse(localStorage.getItem('userData'));
+        if(!userData){//if doesnt exist
+            return;
+        }
+        const loadedUser = new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate));
+
+        if(loadedUser.token){ //will check if the token is valid, by calling its getter where we check if the date is expired
+            this.user.next(loadedUser); 
+        }
     }
 
     private handleError(errorRes: HttpErrorResponse){
