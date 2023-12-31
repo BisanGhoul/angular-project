@@ -4,6 +4,7 @@ import { BehaviorSubject, Subject } from "rxjs";
 import { throwError } from "rxjs/internal/observable/throwError";
 import { catchError, tap } from "rxjs/operators";
 import { User } from "./user.model";
+import { Router } from "@angular/router";
 
 //we will get back these 5 fields, how our response looks like
 //optional, good practice
@@ -19,7 +20,8 @@ export interface AuthResponseData{
 @Injectable({providedIn: 'root'})
 export class AuthService{
     user = new BehaviorSubject<User>(null);
-    constructor(private http: HttpClient){}
+    constructor(private http: HttpClient,
+                private router: Router){}
 
     //send a request to sign up URL
     signup(email: string, password: string){
@@ -54,6 +56,11 @@ export class AuthService{
             ) 
         );
 
+    }
+
+    logout(){
+        this.user.next(null);
+        this.router.navigate(['/auth']);
     }
 
     private handleAuthentication(email:string, userId:string, token:string, expiresIn: number){
