@@ -52,4 +52,8 @@ export class AuthComponent{
         )
         form.reset();
     }
+
+    onHandleError(){
+        this.error = null; //the consdiotion in *ngIf to show the error will lead to false
+    }
 }

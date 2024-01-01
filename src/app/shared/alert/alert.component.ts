@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 
 @Component({
     selector: 'app-alert',
@@ -7,4 +7,9 @@ import { Component, Input } from "@angular/core";
 })
 export class AlertComponent{
     @Input() message: string; //settable from outside
+    @Output() close = new EventEmitter<void>();// send no data\\
+
+    onClose(){ // will be trigerred when user click on close or backdrop
+        this.close.emit();
+    }
 }
